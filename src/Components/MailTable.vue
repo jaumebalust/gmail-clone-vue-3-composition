@@ -1,6 +1,6 @@
 <template>
-  <button @click="selectedScreen = 'inbox'" :disabled="selectedScreen === 'inbox'"> Inbox</button>
-  <button @click="selectedScreen = 'archived'" :disabled="selectedScreen === 'archived'"> Archived</button>
+  <button @click="screenSelection.selectInbox" :disabled="screenSelection.isInboxSelected()"> Inbox</button>
+  <button @click="screenSelection.selectArchived" :disabled="screenSelection.isArchivedSelected()"> Archived</button>
 
   <bulk-selection :emails="filteredEmails"></bulk-selection>
   <table class="mail-table">
@@ -36,6 +36,7 @@ import MailView from "@/Components/MailView";
 import ModalView from "@/Components/ModalView";
 import {reactive, ref} from 'vue'
 import useEmailSelection from '../composables/use-email-selection'
+import useScreenSelection from '../composables/use-screen-selection'
 import BulkSelection from "@/Components/BulkSelection";
 
 export default {
@@ -51,6 +52,7 @@ export default {
       emails: ref(emails),
       openedEmail: ref(null),
       emailSelection: useEmailSelection(),
+      screenSelection: useScreenSelection(),
       selectedScreen:ref('inbox')
     }
   },
@@ -61,9 +63,9 @@ export default {
       })
     },
     filteredEmails() {
-      if (this.selectedScreen == 'inbox'){
+      if (this.screenSelection.screen == 'inbox'){
         return this.sortedEmails.filter(e => !e.archived)
-      } else if (this.selectedScreen == 'archived'){
+      } else if (this.screenSelection.screen == 'archived'){
         return this.sortedEmails.filter(e => e.archived)
       }
 

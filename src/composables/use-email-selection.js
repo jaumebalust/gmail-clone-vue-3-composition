@@ -37,8 +37,8 @@ export const useEmailSelection = function (){
     forSelected(email => email.read = false)
   }
 
-  let archive = ()=>{
-    forSelected(email => email.archived = true)
+  let toggleArchive = ()=>{
+    forSelected(email => email.archived = !email.archived)
   }
 
   let allAreRead = ()=>{
@@ -54,7 +54,7 @@ export const useEmailSelection = function (){
 
 
   return {
-    emails,toggle,clear,addMultiple,markRead,markUnRead, archive,allAreRead,allAreUnRead
+    emails,toggle,clear,addMultiple,markRead,markUnRead, toggleArchive,allAreRead,allAreUnRead
   }
 }
 

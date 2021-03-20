@@ -8,13 +8,15 @@
     <span class="bulk-selection__content">
       <button :disabled="emailSelection.allAreRead()" @click="emailSelection.markRead()">Mark Read</button>
       <button :disabled="emailSelection.allAreUnRead()" @click="emailSelection.markUnRead()">Mark UnRead</button>
-      <button :disabled="numberSelected === 0" @click="emailSelection.archive()">Archive</button>
+      <button :disabled="numberSelected === 0" @click="emailSelection.toggleArchive()">
+        {{screenSelection.isInboxSelected() ? 'Archive' :'UnArchive'}}</button>
     </span>
   </div>
 </template>
 
 <script>
 import useEmailSelection from "@/composables/use-email-selection";
+import useScreenSelection from "@/composables/use-screen-selection";
 import {computed} from 'vue'
 
 export default {
@@ -50,6 +52,7 @@ export default {
       allEmailsSelected,
       someEmailSelected,
       bulkSelect,
+      screenSelection:useScreenSelection(),
       emailSelection,
       numberSelected
     }
